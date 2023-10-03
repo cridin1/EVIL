@@ -74,7 +74,7 @@ else:
     for intent in intent_mismatch:
             intent_text = intent_text.replace(intent,intent[1:]+'\n')
     intent_arr = intent_text.split('\n')[:-1]
-    print(intent_text.split('\n')[-1])
+    #print(intent_text.split('\n')[-1])
     code_arr = code_file.readlines() # need to figure out how to do this - maybe human annotation.
 
 if len(intent_arr) != len(code_arr):

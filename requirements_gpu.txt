@@ -3,9 +3,9 @@ Sphinx
 sphinxcontrib-napoleon
 docopt
 graphviz
-sentencepiece==0.1.91
+sentencepiece
 unidecode
-tensorflow==1.15.2
+tensorflow
 pylru
 spacy==2.2.4
 transformers==2.5.0

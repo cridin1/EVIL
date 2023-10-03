@@ -21,21 +21,21 @@ select_dataset $1;
 
 lang=$dataset_str
 lr=5e-5
-batch_size=32 # or 64
+batch_size=8 # or 64
 beam_size=10
 source_length=256
 target_length=128
 data_dir=../processed_dataset/ #change when changing dataset version
 output_dir=finetuned_model/$lang
-train_file=$data_dir/$dataset_str-train.json.seq2seq #change when changing dataset
-dev_file=$data_dir/$dataset_str-dev.json.seq2seq #change when changing dataset
-test_file=$data_dir/$dataset_str-test.json.seq2seq #change when changing dataset
+train_file=$data_dir/$dataset_str-train.json #change when changing dataset
+dev_file=$data_dir/$dataset_str-dev.json #change when changing dataset
+test_file=$data_dir/$dataset_str-test.json #change when changing dataset
 eval_steps=320 
 train_steps=2800 
 pretrained_model=pretrained_models/pytorch_model.bin #CodeBERT: path to CodeBERT. Roberta: roberta-base
 
 python run.py --do_train --do_eval --model_type roberta --model_name_or_path $pretrained_model --config_name roberta-base --tokenizer_name roberta-base --train_filename $train_file --dev_filename $dev_file --output_dir $output_dir --max_source_length $source_length --max_target_length $target_length --beam_size $beam_size --train_batch_size $batch_size --eval_batch_size $batch_size --learning_rate $lr --train_steps $train_steps --eval_steps $eval_steps --nl2code True
 
-batch_size=128 
+batch_size=8 
 test_model=$output_dir/checkpoint-best-bleu/pytorch_model.bin #checkpoint for test
 python run.py --do_test --model_type roberta --model_name_or_path roberta-base --config_name roberta-base --tokenizer_name roberta-base  --load_model_path $test_model --dev_filename $dev_file --test_filename $test_file --output_dir $output_dir --max_source_length $source_length --max_target_length $target_length --beam_size $beam_size --eval_batch_size $batch_size --nl2code True
