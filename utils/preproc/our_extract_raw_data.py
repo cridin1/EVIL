@@ -95,6 +95,9 @@ if __name__ == '__main__':
     elif fileSelect == 2:
         list_of_files = [('decoder-train.json','to_parse'), ('decoder-dev.json','to_parse'),('decoder-test.json','to_parse')]
 
+    elif fileSelect == 3:
+        list_of_files = [('powershell-train.json','to_parse'), ('powershell-dev.json','to_parse'),('powershell-test.json','to_parse')]
+
 
    
     
