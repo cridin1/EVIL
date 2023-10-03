@@ -41,10 +41,18 @@ function select_dataset() {
 		dataset="decoder";
 		testset="decoder-test";
 		echo_time "You selected the decoder dataset";
+
+	elif [ $1 -eq 3 ] && [ -n $3 ]; then
+		file_json="powershell.test.json";
+		file_hyp="powershell.test.hyp";
+		file_answer="answer_powershell.txt";
+		dataset="powershell";
+		testset="powershell-test";
+		echo_time "You selected the powershell dataset";
 	else
 		echo "ERROR: Invalid dataset";
-	        echo "Usage: ./Seq2Seq_Launch.sh [DATASET] [PREPROCESSING]"
-		echo "DATASET: type 1 for the Encoder Python dataset, 2 for the Decoder Assembly Dataset."
+	        echo "Usage: ./Seq2Seq_Launch.sh [DATASET] [PREPROCESSING]  [DATASET PATH]"
+		echo "DATASET: type 1 for the Encoder Python dataset, 2 for the Decoder Assembly Dataset, type 3 for Custom Dataset."
 		exit 0;
 	fi
 }
@@ -60,7 +68,7 @@ function select_preprocessing() {
 		echo_time "Preprocessing with Intent Parser (IP) selected";
 	else
 		echo "ERROR: Invalid preprocessing";
-	        echo "Usage: ./Seq2Seq_Launch.sh [DATASET] [PREPROCESSING]"
+	        echo "Usage: ./Seq2Seq_Launch.sh [DATASET] [PREPROCESSING] [DATASET PATH]"
 		echo "PREPROCESSING: type 1 preprocessing without the Intent Parser, 2 for preprocessing with the Intent Parser"
 		exit 0;
 	fi
@@ -72,7 +80,12 @@ echo "Welcome to EVIL's Seq2Seq Launcher!";
 select_dataset $1;
 select_preprocessing $2;
 echo_time "Processing the selected dataset...";
-bash $SRC_DIR/utils/test_split.sh $1 $2
+
+if [ $1 -eq 3 ]; then #custom dataset path
+	bash $SRC_DIR/utils/test_split.sh $1 $2 $3
+else
+	bash $SRC_DIR/utils/test_split.sh $1 $2
+fi
 
 echo_time "Running $file_py";
 python $file_py $dataset

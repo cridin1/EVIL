@@ -62,6 +62,10 @@ class Seq2SeqRunner():
             self.dev = 'decoder-dev'
             self.test = 'decoder-test'
 
+        elif self.dataset == 'powershell':
+            self.train = 'powershell-train'
+            self.dev = 'powershell-dev'
+            self.test = 'powershell-test'
 
         
         if self.src_embedding != 'SimpleWordEmbedding' and self.trg_embedding is None:

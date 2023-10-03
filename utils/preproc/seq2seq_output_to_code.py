@@ -16,6 +16,8 @@ if __name__ == '__main__':
         res_words = 'python'
     elif dataset =='decoder':
         res_words = 'assembly'
+    elif dataset == "powershell":
+        res_words = ""
     dataset = json.load(open(dataset_path))
 
     cannon = Canonical(reserved_words = res_words)
