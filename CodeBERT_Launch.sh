@@ -48,10 +48,14 @@ function select_dataset() {
 		dataset=2;
 		dataset_str="decoder";
 		echo_time "Assembly Decoder dataset selected";
+	elif [ $1 -eq 3 ] && [ -n $4 ]; then
+		dataset=3;
+		dataset_str="powershell";
+		echo_time "Powershell dataset selected";
 	else
 		echo "ERROR: Invalid dataset";
-	        echo "Usage: ./CodeBERT_Launch.sh [DEVICE] [DATASET] [PREPROCESSING]"
-		echo "DATASET: type 1 for the Encoder Python dataset, 2 for the Decoder Assembly Dataset."
+	        echo "Usage: ./CodeBERT_Launch.sh [DEVICE] [DATASET] [PREPROCESSING] [DATASET_PATH]"
+		echo "DATASET: type 1 for the Encoder Python dataset, 2 for the Decoder Assembly Dataset, type 3 for Custom Dataset."
 		exit 0;
 	fi
 }
@@ -67,7 +71,7 @@ function select_preprocessing() {
 		echo_time "Preprocessing with Intent Parser (IP) selected";
 	else
 		echo "ERROR: Invalid preprocessing";
-	        echo "Usage: ./CodeBERT_Launch.sh [DEVICE] [DATASET] [PREPROCESSING]"
+	        echo "Usage: ./CodeBERT_Launch.sh [DEVICE] [DATASET] [PREPROCESSING] [DATASET_PATH]"
 		echo "PREPROCESSING: type 1 preprocessing without the Intent Parser, 2 for preprocessing with the Intent Parser"
 		exit 0;
 	fi
@@ -83,7 +87,12 @@ select_machine $1;
 select_dataset $2;
 select_preprocessing $3;
 echo_time "Processing the selected dataset...";
-bash $SRC_DIR/utils/test_split.sh $dataset $preprocessing
+
+if [ $dataset -eq 3 ]; then #custom dataset path
+	bash $SRC_DIR/utils/test_split.sh $dataset $preprocessing $4
+else
+	bash $SRC_DIR/utils/test_split.sh $dataset $preprocessing
+fi
 
 echo_time "Running $file...";
 if [ $1 -eq 0 ]; then

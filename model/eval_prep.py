@@ -2,7 +2,7 @@ import json
 import argparse
 
 parser = argparse.ArgumentParser(description="prepare for evaluating a finetuned CodeBERT model")
-parser.add_argument('dataset', help='select either the encoder or decoder dataset')
+parser.add_argument('dataset', help='select encoder, decoder or powershell dataset')
 args = parser.parse_args()
 dataset = args.dataset
 

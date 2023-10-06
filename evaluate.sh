@@ -17,10 +17,14 @@ function select_dataset() {
 		dataset=2;
 		dataset_str="decoder";
 		echo "Assembly Decoder dataset selected";
+	elif [ $1 -eq 3 ]; then
+		dataset=3;
+		dataset_str="powershell";
+		echo "Powershell dataset selected";
 	else
 		echo "ERROR: Wrong machine";
 	        echo "Usage: bash evaluate.sh [DATASET]"
-		echo "DATASET: type 1 for the Encoder Python dataset, 2 for the Decoder Assembly Dataset."
+		echo "DATASET: type 1 for the Encoder Python dataset, 2 for the Decoder Assembly Dataset, type 3 for Custom Dataset."
 		exit 0;
 	fi
 }

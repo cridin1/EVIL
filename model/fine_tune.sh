@@ -9,10 +9,14 @@ function select_dataset() {
 		dataset=2;
 		dataset_str="decoder";
 		echo "Assembly Decoder dataset selected";
+	elif [ $1 -eq 3 ]; then
+		dataset=3;
+		dataset_str="powershell";
+		echo "Powershell dataset selected";
 	else
 		echo "ERROR: Wrong machine";
 	        echo "Usage: bash fine_tune.sh [DATASET]"
-		echo "DATASET: type 1 for the Encoder Python dataset, 2 for the Decoder Assembly Dataset."
+		echo "DATASET: type 1 for the Encoder Python dataset, 2 for the Decoder Assembly Dataset, type 3 for Custom Dataset."
 		exit 0;
 	fi
 }
@@ -27,9 +31,9 @@ source_length=256
 target_length=128
 data_dir=../processed_dataset/ #change when changing dataset version
 output_dir=finetuned_model/$lang
-train_file=$data_dir/$dataset_str-train.json #change when changing dataset
-dev_file=$data_dir/$dataset_str-dev.json #change when changing dataset
-test_file=$data_dir/$dataset_str-test.json #change when changing dataset
+train_file=$data_dir/$dataset_str-train.json.seq2seq #change when changing dataset
+dev_file=$data_dir/$dataset_str-dev.json.seq2seq #change when changing dataset
+test_file=$data_dir/$dataset_str-test.json.seq2seq #change when changing dataset
 eval_steps=320 
 train_steps=2800 
 pretrained_model=pretrained_models/pytorch_model.bin #CodeBERT: path to CodeBERT. Roberta: roberta-base
